@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Tabla pedidos</title>
+</head>
+<body>
+    <header>
+        <h1>DATOS PEDIDOS</h1>
+    
+        <nav>
+            <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="tabla_clientes.html">CLIENTES</a></li>
+            <li><a href="tabla_pedido.html">PEDIDOS</a></li>
+            <li><a href="facturas.html">FACTURAS</a></li>
+            <li><a href="fase1.xml">XML</a></li>
+            <li><a href="trimestres.html">TRIMESTRES</a></li>
+            </ul>
+        </nav>
+    </header>
+    <footer>
+        <script>
+            
+            if (window.XMLHttpRequest)
+            {
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.open("GET","./fase1.xml",false);
+            xmlhttp.send();
+            xmlDoc=xmlhttp.responseXML;
+            document.write("<table class='table table-dark table-hover'border='10'>");
+            var pedidos=xmlDoc.getElementsByTagName("pedido");
+            
+            for(var i=0;i<pedidos.length;i++)
+            {
+                id_pedido=pedidos[i].getElementsByTagName("id_pedido")[0].childNodes[0].nodeValue
+                fecha_compra=pedidos[i].getElementsByTagName("fecha_compra")[0].childNodes[0].nodeValue
+                fecha_entrega=pedidos[i].getElementsByTagName("fecha_entrega")[0].childNodes[0].nodeValue
+                total_factura=pedidos[i].getElementsByTagName("total_factura")[0].childNodes[0].nodeValue
+                nombre_producto=pedidos[i].getElementsByTagName("nombre_producto")[0].childNodes[0].nodeValue
+                referencia=pedidos[i].getElementsByTagName("referencia")[0].childNodes[0].nodeValue
+                precio=pedidos[i].getElementsByTagName("precio")[0].childNodes[0].nodeValue
+                unidades=pedidos[i].getElementsByTagName("unidades")[0].childNodes[0].nodeValue
+                
+
+                document.write("<tr><td>");
+                document.write(id_pedido);
+                document.write("</td><td>");
+                document.write(fecha_compra);
+                document.write("</td><td>");
+                document.write(fecha_entrega);
+                document.write("</td><td>");
+                document.write(total_factura);
+                document.write("</td><td>");
+                document.write(nombre_producto);
+                document.write("</td><td>");
+                document.write(referencia);
+                document.write("</td><td>");
+                document.write(precio);
+                document.write("</td><td>");
+                document.write(unidades);            
+                document.write("</td></tr>");
+                
+            }
+            document.write("</table>");
+        </script>
+    </footer>
+</body>
+</html>

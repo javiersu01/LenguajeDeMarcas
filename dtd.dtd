@@ -1,0 +1,26 @@
+<!ELEMENT pedidos (pedido*)>     
+    <!ELEMENT pedido (numero, nombre, apellido, telefono, direccion, email, fecha_inclusion,datosPedido)>
+        <!ELEMENT numero (#PCDATA)>    
+        <!ELEMENT nombre (#PCDATA)>
+        <!ELEMENT apellido (#PCDATA)>
+        <!ELEMENT telefono (#PCDATA)>
+    <!ELEMENT direccion (calle, ciudad, codigo_postal, provincia)>
+        <!ELEMENT calle (#PCDATA)>
+        <!ELEMENT ciudad (#PCDATA)>
+        <!ELEMENT codigo_postal (#PCDATA)>
+        <!ELEMENT provincia (#PCDATA)>
+        <!ELEMENT email (#PCDATA)>
+    <!ELEMENT fecha_inclusion (fecha,año,trimestre)>
+        <!ELEMENT fecha (#PCDATA)>
+        <!ELEMENT año (#PCDATA)>
+        <!ELEMENT trimestre (#PCDATA)>
+    <!ELEMENT datosPedido (id_pedido, fecha_compra, fecha_entrega, total_factura, producto)>
+        <!ELEMENT id_pedido (#PCDATA)>
+        <!ELEMENT fecha_compra (#PCDATA)>
+        <!ELEMENT fecha_entrega (#PCDATA)>
+        <!ELEMENT total_factura (#PCDATA)>
+    <!ELEMENT producto (nombre_producto, referencia, precio, unidades)>
+        <!ELEMENT nombre_producto (#PCDATA)>
+        <!ELEMENT referencia (#PCDATA)>
+        <!ELEMENT precio (#PCDATA)>
+        <!ELEMENT unidades (#PCDATA)>

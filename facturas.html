@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Tabla facturas</title>
+</head>
+
+<body>
+    <header>
+        <h1>FACTURAS</h1>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="tabla_clientes.html">CLIENTES</a></li>
+                <li><a href="tabla_pedido.html">PEDIDOS</a></li>
+                <li><a href="facturas.html">FACTURAS</a></li>
+                <li><a href="fase1.xml">XML</a></li>
+                <li><a href="trimestres.html">TRIMESTRES</a></li>
+            </ul>
+        </nav>
+    </header>
+    <footer>
+        <div class="divformulario">
+            <form class="formulario">
+                <fieldset>
+                    <label for="idnumber">Seleciona el numero de factura (1 - <span id="number"></span>): </label>
+                    <input type="number" id="idnumber" name="idnumber">
+                    <button class="btn btn-secondary btn-sm" type="submit">Submit </button>
+                </fieldset>
+            </form>
+            <table class="table table-dark table-striped">
+                <th class="header_tabla">Buscador de factura</th>
+                <tr>
+                    <td>Número: </td>
+                    <td id="numero"></td>
+                </tr>
+                <tr>
+                    <td>Nombre: </td>
+                    <td id="nombre"></td>
+                </tr>
+                <tr>
+                    <td>Apellido: </td>
+                    <td id="apellido"></td>
+                </tr>
+                <tr>
+                    <td>Teléfono: </td>
+                    <td id="telefono"></td>
+                </tr>
+                <tr>
+                    <td>Calle: </td>
+                    <td id="calle"></td>
+                </tr>
+                <tr>
+                    <td>Ciudad: </td>
+                    <td id="ciudad"></td>
+                </tr>
+                <tr>
+                    <td>Codigo Postal: </td>
+                    <td id="codigo_postal"></td>
+                </tr>
+                <tr>
+                    <td>Provincia: </td>
+                    <td id="provincia"></td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td id="email"></td>
+                </tr>
+                <tr>
+                    <td>nombre_producto: </td>
+                    <td id="nombre_producto"></td>
+                </tr>
+                <tr>
+                    <td>Fecha compra: </td>
+                    <td id="fecha_compra"></td>
+                </tr>
+                <tr>
+                    <td>Fecha entrega: </td>
+                    <td id="fecha_entrega"></td>
+                </tr>
+                <tr>
+                    <td>Total factura: </td>
+                    <td id="total_factura"></td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "fase1.xml", true);
+
+            window.addEventListener("load", function () {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "fase1.xml", true);
+
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        const xmlDoc = this.responseXML;
+                        const numberSpan = document.querySelector("#number");
+                        const pedidos = xmlDoc.getElementsByTagName("pedido");
+                        numberSpan.innerHTML = pedidos.length;
+                    }
+                };
+
+                xhr.send();
+            });
+
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    const xmlDoc = this.responseXML;
+                    const form = document.querySelector("form");
+
+                    form.addEventListener("submit", function (event) {
+                        event.preventDefault();
+                        const idNumber = document.querySelector("#idnumber").value;
+                        const pedidos = xmlDoc.getElementsByTagName("pedido");
+                        if (idNumber < 1 || idNumber > (pedidos.length)) {
+                            document.querySelector("#numero").innerHTML = "";
+                            document.querySelector("#nombre").innerHTML = "";
+                            document.querySelector("#apellido").innerHTML = "";
+                            document.querySelector("#telefono").innerHTML = "";
+                            document.querySelector("#calle").innerHTML = "";
+                            document.querySelector("#ciudad").innerHTML = "";
+                            document.querySelector("#codigo_postal").innerHTML = "";
+                            document.querySelector("#provincia").innerHTML = "";
+                            document.querySelector("#email").innerHTML = "";
+                            document.querySelector("#nombre_producto").innerHTML = "";
+                            document.querySelector("#fecha_compra").innerHTML = "";
+                            document.querySelector("#fecha_entrega").innerHTML = "";
+                            document.querySelector("#total_factura").innerHTML = "";
+                            log.innerHTML = "No se encontró una nota con ese número";
+                            return;
+                        }
+                        const pedido = pedidos[idNumber - 1];
+                        const numero = pedido.getElementsByTagName("numero")[0].childNodes[0].nodeValue;
+                        const nombre = pedido.getElementsByTagName("nombre")[0].childNodes[0].nodeValue;
+                        const apellido = pedido.getElementsByTagName("apellido")[0].childNodes[0].nodeValue;
+                        const telefono = pedido.getElementsByTagName("telefono")[0].childNodes[0].nodeValue;
+                        const calle = pedido.getElementsByTagName("calle")[0].childNodes[0].nodeValue;
+                        const ciudad = pedido.getElementsByTagName("ciudad")[0].childNodes[0].nodeValue;
+                        const codigo_postal = pedido.getElementsByTagName("codigo_postal")[0].childNodes[0].nodeValue;
+                        const provincia = pedido.getElementsByTagName("provincia")[0].childNodes[0].nodeValue;
+                        const email = pedido.getElementsByTagName("email")[0].childNodes[0].nodeValue;
+                        const nombre_producto = pedido.getElementsByTagName("nombre_producto")[0].childNodes[0].nodeValue;
+                        const fecha_compra = pedido.getElementsByTagName("fecha_compra")[0].childNodes[0].nodeValue;
+                        const fecha_entrega = pedido.getElementsByTagName("fecha_entrega")[0].childNodes[0].nodeValue;
+                        const total_factura = pedido.getElementsByTagName("total_factura")[0].childNodes[0].nodeValue;
+
+
+                        document.querySelector("#numero").innerHTML = numero;
+                        document.querySelector("#nombre").innerHTML = nombre;
+                        document.querySelector("#apellido").innerHTML = apellido;
+                        document.querySelector("#telefono").innerHTML = telefono;
+                        document.querySelector("#calle").innerHTML = calle;
+                        document.querySelector("#ciudad").innerHTML = ciudad;
+                        document.querySelector("#codigo_postal").innerHTML = codigo_postal;
+                        document.querySelector("#provincia").innerHTML = provincia;
+                        document.querySelector("#email").innerHTML = email;
+                        document.querySelector("#nombre_producto").innerHTML = nombre_producto;
+                        document.querySelector("#fecha_compra").innerHTML = fecha_compra;
+                        document.querySelector("#fecha_entrega").innerHTML = fecha_entrega;
+                        document.querySelector("#total_factura").innerHTML = total_factura;
+                    });
+                }
+            };
+            xhr.send();
+        </script>
+    </footer>
+</body>
+</html>
